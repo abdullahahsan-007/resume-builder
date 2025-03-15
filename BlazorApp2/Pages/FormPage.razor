@@ -1,0 +1,92 @@
+﻿@page "/form"
+@inject NavigationManager Navigation
+@inject BlazorApp2.Services.ResumeService ResumeService
+@using BlazorApp2.Models
+
+<head>
+    <title>Build Your Résumé</title>
+</head>
+
+<body style="font-family: Arial, sans-serif; background-color: #2c2f36; margin: 0; padding: 20px;">
+    <table style="width: 600px; margin: auto; background: white; border-collapse: collapse; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,0.2);">
+        <tr>
+            <td style="background: #e6e6e6; padding: 15px; font-size: 18px; font-weight: bold; text-align: center;">Build Your Résumé</td>
+        </tr>
+        <tr>
+            <td style="padding: 20px;">
+                <EditForm Model="@resume" OnValidSubmit="SubmitForm">
+                    <DataAnnotationsValidator />
+                    <table style="width: 100%;">
+                        <tr>
+                            <td style="width: 50%; padding-right: 5px;">
+                                <label>First Name</label><br>
+                                <InputText @bind-Value="resume.FirstName" style="width: 100%; padding: 8px; margin-top: 5px; border: 1px solid #ccc; border-radius: 4px;" />
+                            </td>
+                            <td style="width: 50%; padding-left: 5px;">
+                                <label>Last Name</label><br>
+                                <InputText @bind-Value="resume.LastName" style="width: 100%; padding: 8px; margin-top: 5px; border: 1px solid #ccc; border-radius: 4px;" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" style="padding-top: 15px;">
+                                <label>Email</label><br>
+                                <InputText @bind-Value="resume.Email" type="email" style="width: 100%; padding: 8px; margin-top: 5px; border: 1px solid #ccc; border-radius: 4px;" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" style="padding-top: 15px;">
+                                <label>Phone</label><br>
+                                <InputText @bind-Value="resume.Phone" type="text" style="width: 100%; padding: 8px; margin-top: 5px; border: 1px solid #ccc; border-radius: 4px;" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" style="padding-top: 15px;">
+                                <label>Education</label><br>
+                                <InputTextArea @bind-Value="resume.Education" style="width: 100%; padding: 8px; margin-top: 5px; border: 1px solid #ccc; border-radius: 4px; height: 80px;" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" style="padding-top: 15px;">
+                                <label>Title of Resume</label><br>
+                                <InputText @bind-Value="resume.Title" type="text" style="width: 100%; padding: 8px; margin-top: 5px; border: 1px solid #ccc; border-radius: 4px;" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" style="padding-top: 15px;">
+                                <label>About Yourself</label><br>
+                                <InputTextArea @bind-Value="resume.About" style="width: 100%; padding: 8px; margin-top: 5px; border: 1px solid #ccc; border-radius: 4px; height: 80px;" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" style="padding-top: 15px;">
+                                <label>Skills</label><br>
+                                <InputTextArea @bind-Value="resume.Skills" style="width: 100%; padding: 8px; margin-top: 5px; border: 1px solid #ccc; border-radius: 4px; height: 80px;" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" style="padding-top: 15px;">
+                                <label>Experience</label><br>
+                                <InputTextArea @bind-Value="resume.Experience" style="width: 100%; padding: 8px; margin-top: 5px; border: 1px solid #ccc; border-radius: 4px; height: 100px;" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" style="padding-top: 15px;">
+                                <button type="submit" style="width: 100%; background-color: #5c79f8; color: white; padding: 10px; border: none; border-radius: 4px; cursor: pointer;">Submit</button>
+                            </td>
+                        </tr>
+                    </table>
+                </EditForm>
+            </td>
+        </tr>
+    </table>
+</body>
+
+@code {
+    private Resume resume = new();
+
+    private void SubmitForm()
+    {
+        ResumeService.UpdateResume(resume);
+        Navigation.NavigateTo("/resume");
+    }
+}
